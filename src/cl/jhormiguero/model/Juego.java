@@ -1,13 +1,12 @@
-package test;
+package cl.jhormiguero.model;
 
-import cl.jhormiguero.model.Hormiga;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
-public class Panel extends JPanel{
+public class Juego extends JPanel{
     public Hormiga hormiga;
     
-    public Panel(){
+    public Juego(){
         hormiga = new Hormiga();
     }
 
