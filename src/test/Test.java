@@ -6,29 +6,88 @@
 package test;
 
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.AbstractAction;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
+import javax.swing.KeyStroke;
 
 /**
  *
  * @author prez
  */
 public class Test extends javax.swing.JFrame {
-    
-    private int i = 100;
+
+    private Panel panel;
 
     /**
      * Creates new form Test
      */
     public Test() {
         initComponents();
-        
-        panel = new JPanel(){
-            @Override
-            public void paint(Graphics g) {
-                
+
+        panel = new Panel();
+
+        scroll.setViewportView(panel);
+
+        // hilo principal
+        new Thread(() -> {
+            while (true) {
+                try {
+                    panel.repaint();
+                    Thread.sleep(1);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            
-        };
+        }).start();
+
+        // hilo que pinta la hormiga
+        new Thread(() -> {
+
+            int cont = 0;
+
+            while (true) {
+                try {
+                    cont++;
+
+                    if (cont == (30 * 5)) {
+                        cont = 0;
+
+                        panel.hormiga.direccion = new Random().nextInt(4);
+                    }
+                     
+
+                    Thread.sleep(30);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }).start();
+
+        this.getRootPane().getInputMap(JRootPane.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, 0), "avanzar");
+        this.getRootPane().getInputMap(JRootPane.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, 0), "retro");
+
+        this.getRootPane().getActionMap().put("avanzar", new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //panel.avanzar();
+            }
+        });
+
+        this.getRootPane().getActionMap().put("retro", new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //panel.retroceder();
+            }
+        });
     }
 
     /**
@@ -40,28 +99,13 @@ public class Test extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panel = new javax.swing.JPanel();
-        btnTest1 = new javax.swing.JButton();
+        scroll = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        panel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
-        panel.setLayout(panelLayout);
-        panelLayout.setHorizontalGroup(
-            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        panelLayout.setVerticalGroup(
-            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 246, Short.MAX_VALUE)
-        );
-
-        btnTest1.setText("Pintar String");
-        btnTest1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTest1ActionPerformed(evt);
+        scroll.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                scrollKeyPressed(evt);
             }
         });
 
@@ -71,29 +115,23 @@ public class Test extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnTest1)
-                        .addGap(0, 267, Short.MAX_VALUE)))
+                .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTest1)
+                .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnTest1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest1ActionPerformed
-         
-    }//GEN-LAST:event_btnTest1ActionPerformed
+    private void scrollKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scrollKeyPressed
+
+    }//GEN-LAST:event_scrollKeyPressed
 
     /**
      * @param args the command line arguments
@@ -131,7 +169,6 @@ public class Test extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnTest1;
-    private javax.swing.JPanel panel;
+    private javax.swing.JScrollPane scroll;
     // End of variables declaration//GEN-END:variables
 }

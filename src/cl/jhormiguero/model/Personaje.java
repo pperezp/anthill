@@ -2,13 +2,14 @@ package cl.jhormiguero.model;
 
 import cl.jhormiguero.model.interfaces.Animable;
 import cl.jhormiguero.model.interfaces.Dibujable;
+import java.awt.Graphics;
 import java.awt.Point;
 
-public abstract class Personaje implements Dibujable, Animable{
+public class Personaje implements Dibujable, Animable{
     private Point posicion;
     
     public Personaje(){
-        this.posicion = new Point(0, 0);
+        this.posicion = new Point(200, 200);
     }
 
     public Point getPosicion() {
@@ -37,5 +38,11 @@ public abstract class Personaje implements Dibujable, Animable{
     @Override
     public void moverDerecha() {
         this.posicion.x += 1;
+    }
+
+    @Override
+    public void dibujar(Graphics g) {
+        g.fillOval(posicion.x, posicion.y, 15, 5);
+        System.out.println(posicion);
     }
 }
