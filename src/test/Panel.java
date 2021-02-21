@@ -1,21 +1,21 @@
 package test;
 
-import cl.jhormiguero.model.Hormiga;
+import cl.jhormiguero.model.Ant;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
 public class Panel extends JPanel{
-    public Hormiga hormiga;
+    public Ant ant;
     
     public Panel(){
-        hormiga = new Hormiga();
+        ant = new Ant();
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         
-        hormiga.dibujar(g);
+        ant.draw(g);
     }
     
 }

@@ -2,72 +2,70 @@ package cl.jhormiguero.model;
 
 import java.awt.Graphics;
 
-public class Hormiga extends Personaje {
+public class Ant extends Player {
     
-    public int direccion;
+    public int direction;
     private int width;
     private int height;
     
-    public Hormiga(){
-        direccion = 0; // avanzar
-        
+    public Ant(){
+        direction = 0; // avanzar
         width = 15;
         height = 5;
     }
     
     @Override
-    public void dibujar(Graphics g) {
-        switch(direccion){
+    public void draw(Graphics graphics) {
+        switch(direction){
             case 0:
-                moverArriba();
+                moveUp();
                 break;
                 
             case 1:
-                moverDerecha();
+                moveRight();
                 break;
                 
             case 2:
-                moverAbajo();
+                moveDown();
                 break;
                 
             case 3:
-                moverIzquierda();
+                moveLeft();
                 break;
                 
         }
         
         
-        g.fillOval(getPosicion().x, getPosicion().y, width, height);
-        System.out.println(getPosicion());
+        graphics.fillOval(getPosition().x, getPosition().y, width, height);
+        System.out.println(getPosition());
     }
 
     @Override
-    public void moverDerecha() {
-        super.moverDerecha(); 
+    public void moveRight() {
+        super.moveRight(); 
         width = 15;
         height = 5;
     }
 
     @Override
-    public void moverIzquierda() {
-        super.moverIzquierda(); 
+    public void moveLeft() {
+        super.moveLeft(); 
         width = 15;
         height = 5;
     }
 
     @Override
-    public void moverAbajo() {
-        super.moverAbajo();
+    public void moveDown() {
+        super.moveDown();
         width = 5;
         height = 15;
     }
 
     @Override
-    public void moverArriba() {
-        super.moverArriba(); 
+    public void moveUp() {
+        super.moveUp(); 
         width = 5;
         height = 15;
     }
-    
     
 }
