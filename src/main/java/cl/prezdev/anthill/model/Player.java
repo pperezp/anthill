@@ -1,25 +1,18 @@
-package cl.jhormiguero.model;
+package cl.prezdev.anthill.model;
 
-import java.awt.Graphics;
-import java.awt.Point;
-import cl.jhormiguero.model.interfaces.Drawable;
-import cl.jhormiguero.model.interfaces.Animatable;
+import lombok.Getter;
+import lombok.Setter;
 
-public class Player implements Drawable, Animatable{
+import java.awt.*;
+
+@Getter @Setter
+public class Player implements Drawable, Movable {
     private Point position;
-    
+
     public Player(){
         this.position = new Point(200, 200);
     }
 
-    public Point getPosition() {
-        return position;
-    }
-
-    public void setPosition(Point position) {
-        this.position = position;
-    }
-    
     @Override
     public void moveUp() {
         this.position.y += 1;
@@ -41,8 +34,8 @@ public class Player implements Drawable, Animatable{
     }
 
     @Override
-    public void draw(Graphics g) {
-        g.fillOval(position.x, position.y, 15, 5);
+    public void draw(Graphics graphics) {
+        graphics.fillOval(position.x, position.y, 15, 5);
         System.out.println(position);
     }
 }

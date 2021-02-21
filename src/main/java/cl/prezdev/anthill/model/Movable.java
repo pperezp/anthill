@@ -1,6 +1,6 @@
-package cl.jhormiguero.model.interfaces;
+package cl.prezdev.anthill.model;
 
-public interface Animatable {
+public interface Movable {
     void moveUp();
     void moveDown();
     void moveLeft();
